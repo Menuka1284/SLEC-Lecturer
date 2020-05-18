@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { Component } from 'react';
-import { View, Text , SafeAreaView, StyleSheet, Dimensions , Alert } from 'react-native';
+import { View, Text , SafeAreaView, StyleSheet, Dimensions , Alert, Image, Button, Linking } from 'react-native';
 import SimpleLineIcon from 'react-native-vector-icons/SimpleLineIcons';
 import MainStyleSheet from '../styles/MainStyleSheet';
 import StyledHeader from '../components/StyledHeader';
@@ -69,8 +69,8 @@ class ProfileScreen extends Component{
             console.log('notification triggers')
             try {
                 PushNotification.localNotification({
-                message: 'You Left Early',
-                title: 'You Left Early',
+                message: 'You Attend Correct Lecture Hall',
+                title: 'You Attend Correct Lecture Hall',
                 vibrate: false
             });
             this.setState({ retry: false });
@@ -97,17 +97,17 @@ class ProfileScreen extends Component{
                             this.props.onGoingLecture.late === 1 ?
                                 <View style={profileScreenStyles.lateHelperTextArea}>
                                     <Text style={[MainStyleSheet.appFontSize,MainStyleSheet.txtBold]}>
-                                          Today You Are Late
+                                          You Are Attend Correct Lecture. 
                                     </Text>
                                 </View>
                                 :
                                 <View style={profileScreenStyles.lateHelperTextArea}>
                                     <Text style={[MainStyleSheet.appFontSize,MainStyleSheet.txtBold]}>
-                                          You Are On Time !! 
+                                          You Are Attend Correct Lecture. 
                                     </Text>
                                 </View>
                             :
-                            <Text>You Are Absent</Text>
+                            <Text>You Are  Not Marked The Lecturer Participation</Text>
                         }
                     </View>
                 </View>
@@ -116,16 +116,22 @@ class ProfileScreen extends Component{
                         <View style={[MainStyleSheet.fiftyPercentWidth,MainStyleSheet.justifyContentCenter,MainStyleSheet.alignItemsCenter]}>
                             <StyledRoundedButton onPress={this.presentButtonHandler} size={Dimensions.get('screen').width / 4} bgColor={PrimaryColor}>
                                 <SimpleLineIcon name={'cursor'} size={AppIconSize_Md} color={'white'} />
-                                <Text style={[profileScreenStyles.attendanceMarkText,MainStyleSheet.appFontSize,MainStyleSheet.txtBold,profileScreenStyles.fontWhite]}>Present</Text>
+                                <Text style={[profileScreenStyles.attendanceMarkText,MainStyleSheet.appFontSize,MainStyleSheet.txtBold,profileScreenStyles.fontWhite]}> Lecturer Attend</Text>
                             </StyledRoundedButton>
                         </View>
-                        <View style={[MainStyleSheet.fiftyPercentWidth,MainStyleSheet.justifyContentCenter,MainStyleSheet.alignItemsCenter]}>
-                            <StyledRoundedButton disabled={this.state.retry} onPress={this.resendAttendance} size={Dimensions.get('screen').width / 4} bgColor={PrimaryColor}>
-                                <SimpleLineIcon name={'reload'} size={AppIconSize_Md} color={'white'} />
-                                <Text style={[profileScreenStyles.attendanceMarkText,MainStyleSheet.appFontSize,MainStyleSheet.txtBold,profileScreenStyles.fontWhite]}>Retry</Text>
+                       <View style={[MainStyleSheet.fiftyPercentWidth,MainStyleSheet.justifyContentCenter,MainStyleSheet.alignItemsCenter]}>
+                            <StyledRoundedButton  onPress={() => {
+            //on clicking we are going to open the URL using Linking
+            Linking.openURL('http://192.168.1.106/');
+          }} size={Dimensions.get('screen').width / 4} bgColor={PrimaryColor}>
+                                <SimpleLineIcon name={'camera'} size={AppIconSize_Md} color={'white'} />
+                                <Text style={[profileScreenStyles.attendanceMarkText,MainStyleSheet.appFontSize,MainStyleSheet.txtBold,profileScreenStyles.fontWhite]}> CCTV View</Text>
                             </StyledRoundedButton>
                         </View>
+              
                     </View>
+        <View>
+       </View>
                 </View>
             </SafeAreaView>
         );
@@ -146,6 +152,7 @@ const profileScreenStyles = StyleSheet.create({
     lateHelperText: {
         margin : 5
     },
+    
 });
 const mapStateToProps = (state) => {
     return {
